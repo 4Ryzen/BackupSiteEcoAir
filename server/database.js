@@ -1,6 +1,8 @@
 // In-memory database for development
 // In production, replace with a real database like PostgreSQL, MongoDB, etc.
 
+import findUserById from './helpers/findUserById.js';
+
 export const db = {
   users: [
     {
@@ -110,4 +112,11 @@ export const createReport = (reportData) => {
   };
   db.reports.push(newReport);
   return newReport;
+};
+
+export const updateUser = (id, data) => {
+  const user = db.users.find(u => u.id === id);
+  if (!user) return null;
+  Object.assign(user, data);
+  return user;
 };

@@ -31,6 +31,14 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date().toISOString() });
 });
 
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const dist = path.join(__dirname, '../dist');
+app.use(express.static(dist));
+app.get('/{*splat}', (req, res) => res.sendFile(path.join(dist, 'index.html')));
+
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
